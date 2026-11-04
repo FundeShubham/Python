@@ -1,100 +1,120 @@
-# It is simple Guess The Number game devlop using python.
-# I created this game when i was learning Python at my collage.
 
 import random
-import sys
+
 
 def get_feedback(target, guess, max_range):
     diff = abs(target - guess)
-    
+
     if diff == 0:
         return "Correct!"
-    
-    # Adjust thresholds based on range size for better playability
+
+    if guess < target:
+        direction = "Too low!"
+    else:
+        direction = "Too high!"
+
     if max_range <= 10:
         if diff == 1:
-            return "Very Close!"
+            distance = "Very close!"
         elif diff <= 3:
-            return "Close"
+            distance = "Close!"
         elif diff <= 5:
-            return "Far"
+            distance = "Far!"
         else:
-            return "Very Far"
+            distance = "Very far!"
     else:
-        # Percentage based for larger ranges
-        if diff <= max(1, max_range * 0.05): # Within 5%
-            return "Very Close!"
-        elif diff <= max(3, max_range * 0.15): # Within 15%
-            return "Close"
-        elif diff <= max(5, max_range * 0.30): # Within 30%
-            return "Far"
+        if diff <= max(1, max_range * 0.05):
+            distance = "Very close!"
+        elif diff <= max(3, max_range * 0.15):
+            distance = "Close!"
+        elif diff <= max(5, max_range * 0.30):
+            distance = "Far!"
         else:
-            return "Very Far"
+            distance = "Very far!"
+
+    return f"{direction} {distance}"
+
 
 def play_level(level):
-    if level == 1:
-        max_val = 10
-    elif level == 2:
-        max_val = 50
-    elif level == 3:
-        max_val = 100
-    else:
+    levels = {
+        1: (10, 5),
+        2: (50, 7),
+        3: (100, 10)
+    }
+
+    if level not in levels:
         print("Invalid level selected.")
         return
 
-    print(f"\n--- Level {level} ---")
-    print(f"Guess a number between 1 and {max_val}")
-    
+    max_val, max_attempts = levels[level]
     target = random.randint(1, max_val)
     attempts = 0
-    
-    while True:
+
+    print(f"\n--- Level {level} ---")
+    print(f"Guess a number between 1 and {max_val}")
+    print(f"You have {max_attempts} attempts.")
+
+    while attempts < max_attempts:
         try:
-            user_input = input("Enter your guess: ")
-            if not user_input.strip(): # Handle empty input
+            user_input = input("Enter your guess: ").strip()
+
+            if not user_input:
+                print("Input cannot be empty.")
                 continue
-                
+
             guess = int(user_input)
-            attempts += 1
-            
+
             if guess < 1 or guess > max_val:
-                print(f"Please enter a number between 1 and {max_val}.")
+                print(f"Enter a number between 1 and {max_val}.")
                 continue
-            
+
+            attempts += 1
+
             if guess == target:
-                print(f"Congratulations! You guessed the number {target} in {attempts} attempts.")
-                break
-            else:
-                feedback = get_feedback(target, guess, max_val)
-        
-                print(f"{feedback}")
-                
+                print(
+                    f"\nCongratulations! You guessed {target} "
+                    f"in {attempts} attempts."
+                )
+                return
+
+            print(get_feedback(target, guess, max_val))
+            print(f"Attempts remaining: {max_attempts - attempts}")
+
         except ValueError:
-            print("Invalid input. Please enter a valid integer.")
+            print("Invalid input. Please enter a whole number.")
+
+    print(f"\nGame over! The correct number was {target}.")
+
 
 def main():
-    print("Welcome to the Random Number Guessing Game!")
-    
+    print("================================")
+    print("   RANDOM NUMBER GUESSING GAME")
+    print("================================")
+
     while True:
         print("\nSelect a Difficulty Level:")
-        print("1. Level 1 (1-10)")
-        print("2. Level 2 (1-50)")
-        print("3. Level 3 (1-100)")
+        print("1. Easy (1-10)")
+        print("2. Medium (1-50)")
+        print("3. Hard (1-100)")
         print("q. Quit")
-        
-        choice = input("Enter choice (1/2/3/q): ").strip().lower()
-        
-        if choice == '1':
-            play_level(1)
-        elif choice == '2':
-            play_level(2)
-        elif choice == '3':
-            play_level(3)
-        elif choice == 'q':
+
+        choice = input("Enter your choice: ").strip().lower()
+
+        if choice in ("1", "2", "3"):
+            play_level(int(choice))
+        elif choice == "q":
             print("Thanks for playing!")
             break
         else:
             print("Invalid choice. Please try again.")
 
+
 if __name__ == "__main__":
-    main()
+    while True:
+        main()
+
+        again = input("\nWould you like to play again? (y/n): ").strip().lower()
+
+        if again != "y":
+            print("See you next time!")
+            break
