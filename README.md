@@ -1,14 +1,38 @@
-<h1>Python</h1><img src="https://img.icons8.com/?size=100&id=13441&format=png&color=000000" alt="Icon">
+# Python
 
-# About
-This is my First year computer science (sppu) Python lab practicals.
-This repository also includes my personal python learning journey and programs.
+Hey! This repository contains the Python programs I've written while learning Python in college and practising on my own.
+
+I'm still learning, so you'll find a mix of basic programs, lab practicals, and a few small experiments here.
+
+### What's inside?
+
+**Lab Practicals**
+- Programs written as part of my college practicals.
+- Basic Python concepts and exercises.
+
+**Small Games**
+- Guess The Number — a simple number guessing game with different difficulty levels.
+
+### Tools I use
+- Python
+- VS Code
+
+### Running the programs
+
+Make sure Python is installed, then run a file using:
+
+```bash
+python filename.py
+```
+
+### A little about this repository
+
+This is where I keep my Python practice code. Some programs are simple, and some are things I've tried to improve along the way.
+
+I'll keep adding more as I learn.
 
 ---
 
-# Auther
-> Shubham Funde
+**Shubham Funde**
 
----
-
-Please consider giving it a star if you found this helpfull
+[GitHub Profile](https://github.com/FundeShubham)
